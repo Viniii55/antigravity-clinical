@@ -7,9 +7,9 @@ from modules.document_gen import DocumentGenerator
 
 # --- App Configuration ---
 st.set_page_config(
-    page_title="Tradutor Clínico | Dr. Rodrigo Gomes",
+    page_title="Antigravity Clinical",
     page_icon="🧠",
-    layout="wide", # Switching to wide for better workspace
+    layout="wide",
     initial_sidebar_state="expanded"
 )
 
@@ -24,20 +24,15 @@ load_custom_css()
 
 # --- Sidebar ---
 with st.sidebar:
-    st.image("https://img.icons8.com/3d-fluency/94/brain.png", width=60)
-    st.markdown("### **Tradutor Clínico**")
-    st.caption("v2.1 Hybrid Engine")
-    
+    st.markdown("### ⚙️ Painel de Controle")
+    st.caption("v3.0 Clinical Edition")
     st.markdown("---")
     
     # --- CONFIGURAÇÃO SILENCIOSA (Hardcoded) ---
-    # O usuário pediu para esconder a seleção.
-    # Padrão: Google Gemini 1.5 Flash (Grátis)
     selected_provider = "google"
     api_key = "AIzaSyCjivPedhBKpz2Jjs6Vv3t0WmySnjOQGBc"
     
     st.success(f"Sistema Online")
-        
     st.markdown("---")
     st.markdown("#### 📜 Histórico Recente")
     for i, item in enumerate(reversed(st.session_state['history'])):
@@ -52,48 +47,55 @@ if not api_key:
 
 engine = AntigravityEngine(api_key, provider=selected_provider)
 
-# Input Section (Glass Card)
+# --- ONBOARDING HELPER ---
+with st.expander("ℹ️ Guia Rápido: Como obter o melhor resultado", expanded=False):
+    st.markdown("""
+    - **Fotos:** Garanta que estejam legíveis, focadas e bem iluminadas.
+    - **Áudio:** Resuma os pontos principais que não estão claros ou ilegíveis nas notas.
+    - **Processamento:** A análise profunda pode levar até 1 minuto. Por favor, não feche a aba.
+    """)
+
+# --- MAIN INPUT SECTION (2 COLUMNS) ---
 with st.container():
-    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
-    st.markdown("### 📥 Central de Upload")
+    st.markdown('<div class="clinical-card">', unsafe_allow_html=True)
     
-    col1, col2 = st.columns(2, gap="medium")
+    col_upload_1, col_upload_2 = st.columns(2, gap="large")
     
-    with col1:
+    with col_upload_1:
+        st.markdown("### 📂 1. Imagens das Anotações")
         uploaded_images = st.file_uploader(
-            "Anexar Anotações (Manuscritos)", 
+            "Carregar fotos do caderno/prontuário", 
             type=['png', 'jpg', 'jpeg'], 
-            accept_multiple_files=True
+            accept_multiple_files=True,
+            key="img_uploader"
         )
         
-    with col2:
+    with col_upload_2:
+        st.markdown("### 🎙️ 2. Áudio do Caso")
         uploaded_audio = st.file_uploader(
-            "Anexar Áudio (Resumo)", 
-            type=['mp3', 'ogg', 'wav', 'm4a']
+            "Carregar áudio complementar (opcional)", 
+            type=['mp3', 'ogg', 'wav', 'm4a'],
+            key="audio_uploader"
         )
         
-    render_metrics(len(uploaded_images) if uploaded_images else 0, uploaded_audio is not None)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Action Section
-generate_btn = st.button("✨ INICIAR TRADUÇÃO CLÍNICA", type="primary")
+# --- ACTION SECTION ---
+generate_btn = st.button("GERAR LAUDO CLÍNICO", type="primary", use_container_width=True)
 
 if generate_btn:
     if not uploaded_images and not uploaded_audio:
         st.error("⚠️ O sistema precisa de pelo menos uma fonte de dados (Imagem ou Áudio).")
         st.stop()
         
-    with st.status("🧠 O Neural Engine está trabalhando...", expanded=True) as status:
+    with st.spinner("Antigravity ativado: Processando e estruturando o caso clínico..."):
         try:
             # 1. Audio Phase
             transcript = ""
             if uploaded_audio:
-                st.write("🎙️ Ouvindo e transcrevendo áudio...")
                 transcript = engine.transcribe_audio(uploaded_audio)
-                st.write("✅ Áudio decodificado.")
             
             # 2. Vision & Reasoning Phase
-            st.write("👁️ Analisando manuscritos e correlacionando fatos...")
             final_report = engine.generate_clinical_report(transcript, uploaded_images if uploaded_images else [])
             
             if final_report:
@@ -104,7 +106,6 @@ if generate_btn:
                     "timestamp": datetime.now().strftime("%H:%M"),
                     "content": final_report
                 })
-                status.update(label="✅ Processamento Finalizado!", state="complete", expanded=False)
             
         except Exception as e:
             st.error(f"Erro Crítico: {e}")
