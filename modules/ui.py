@@ -1,22 +1,51 @@
 import streamlit as st
 
-def load_custom_css():
-    st.markdown("""
-        <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap');
-        
-        /* --- AURORA BACKGROUND ANIMATION --- */
-        @keyframes aurora {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+import base64
+import os
 
-        .stApp {
+def get_img_as_base64(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+def load_custom_css():
+    # Tenta carregar o Background Neural Personalizado
+    bg_style = ""
+    bg_path = "assets/hero.png"
+    if not os.path.exists(bg_path):
+        bg_path = "assets/hero.jpg"
+        
+    if os.path.exists(bg_path):
+        # Se achou a imagem, usa ela como fundo
+        img_b64 = get_img_as_base64(bg_path)
+        bg_style = f"""
+            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95)), url("data:image/png;base64,{img_b64}");
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        """
+    else:
+        # Fallback para a animação Aurora se não tiver imagem
+        bg_style = """
             background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #0f172a);
             background-size: 400% 400%;
             animation: aurora 15s ease infinite;
-        }
+        """
+
+    st.markdown(f"""
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap');
+        
+        /* --- AURORA / NEURAL BACKGROUND --- */
+        @keyframes aurora {{
+            0% {{ background-position: 0% 50%; }}
+            50% {{ background-position: 100% 50%; }}
+            100% {{ background-position: 0% 50%; }}
+        }}
+
+        .stApp {{
+            {bg_style}
+        }}
 
         /* --- TYPOGRAPHY --- */
         h1, h2, h3, h4, .stMarkdown {
