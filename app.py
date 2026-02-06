@@ -47,49 +47,42 @@ if not api_key:
 
 engine = AntigravityEngine(api_key, provider=selected_provider)
 
-# --- ONBOARDING HELPER (Inside the Floating Card) ---
-# --- MAIN INPUT SECTION (Floating Card) ---
-st.markdown('<div class="main-content-card">', unsafe_allow_html=True)
+# --- MAIN INPUT SECTION (Unified Card) ---
+with st.container(border=True):
+    # Onboarding inside the card for unity
+    with st.expander("ℹ️ Guia Rápido", expanded=False):
+        st.markdown("""
+        - **Fotos:** Garanta que estejam legíveis, focadas e bem iluminadas.
+        - **Áudio:** Resuma os pontos principais das notas.
+        """)
+        
+    st.write("") 
 
-with st.expander("ℹ️ Guia Rápido: Como obter o melhor resultado", expanded=False):
-    st.markdown("""
-    - **Fotos:** Garanta que estejam legíveis, focadas e bem iluminadas.
-    - **Áudio:** Resuma os pontos principais que não estão claros ou ilegíveis nas notas.
-    - **Processamento:** A análise profunda pode levar até 1 minuto.
-    """)
-
-st.write("") # Spacer
-
-col_upload_1, col_upload_2 = st.columns(2, gap="large")
-
-with col_upload_1:
-    st.markdown('<div class="upload-header">📂 1. Imagens (Caderno)</div>', unsafe_allow_html=True)
-    st.caption("Fotos das anotações manuscritas.")
-    uploaded_images = st.file_uploader(
-        "image_uploader_hidden_label", 
-        label_visibility="collapsed",
-        type=['png', 'jpg', 'jpeg'], 
-        accept_multiple_files=True,
-        key="img_uploader"
-    )
+    col_upload_1, col_upload_2 = st.columns(2, gap="medium")
     
-with col_upload_2:
-    st.markdown('<div class="upload-header">🎙️ 2. Áudio (Opcional)</div>', unsafe_allow_html=True)
-    st.caption("Resumo verbal ou gravação da sessão.")
-    uploaded_audio = st.file_uploader(
-        "audio_uploader_hidden_label",
-        label_visibility="collapsed", 
-        type=['mp3', 'ogg', 'wav', 'm4a'],
-        key="audio_uploader"
-    )
+    with col_upload_1:
+        st.markdown('<div class="upload-header">📂 1. Imagens</div>', unsafe_allow_html=True)
+        uploaded_images = st.file_uploader(
+            "image_uploader_hidden_label", 
+            label_visibility="collapsed",
+            type=['png', 'jpg', 'jpeg'], 
+            accept_multiple_files=True,
+            key="img_uploader"
+        )
+        
+    with col_upload_2:
+        st.markdown('<div class="upload-header">🎙️ 2. Áudio</div>', unsafe_allow_html=True)
+        uploaded_audio = st.file_uploader(
+            "audio_uploader_hidden_label",
+            label_visibility="collapsed", 
+            type=['mp3', 'ogg', 'wav', 'm4a'],
+            key="audio_uploader"
+        )
 
-st.write("") # Spacer
-st.divider()
-
-# --- ACTION SECTION ---
-generate_btn = st.button("✨ GERAR LAUDO CLÍNICO ESPECIALIZADO", type="primary", use_container_width=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
+    st.write("")
+    
+    # --- ACTION SECTION ---
+    generate_btn = st.button("GERAR LAUDO CLÍNICO", type="primary", use_container_width=True)
 
 if generate_btn:
     if not uploaded_images and not uploaded_audio:

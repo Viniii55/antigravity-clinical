@@ -17,7 +17,7 @@ def load_custom_css():
     if os.path.exists(bg_path):
         img_b64 = get_img_as_base64(bg_path)
         header_bg = f"""
-            background-image: linear-gradient(180deg, rgba(14, 78, 117, 0.9) 0%, rgba(14, 78, 117, 0.8) 100%), url("data:image/png;base64,{img_b64}");
+            background-image: linear-gradient(180deg, rgba(14, 78, 117, 0.9) 0%, rgba(14, 78, 117, 0.95) 100%), url("data:image/png;base64,{img_b64}");
             background-size: cover;
             background-position: center;
         """
@@ -26,53 +26,51 @@ def load_custom_css():
 
     st.markdown(f"""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Inter:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@400;600&display=swap');
         
-        /* --- GLOBAL RESET --- */
+        /* --- GLOBAL LAYOUT (Max Width 850px -> Mobile Friendly) --- */
         .block-container {{
-            padding-top: 0 !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-            max-width: 100% !important;
+            max-width: 850px !important;
+            padding-top: 1rem !important;
+            padding-bottom: 2rem !important;
         }}
         
-        /* --- HERO BANNER --- */
+        /* --- HERO BANNER (Compact) --- */
         .hero-cont {{
             {header_bg}
-            padding: 4rem 1rem 6rem 1rem;
+            padding: 2rem 1rem 3rem 1rem;
             text-align: center;
             color: white;
-            margin-bottom: -4rem; /* Negative margin for overlap */
-        }}
-        
-        /* --- FLOATING CARD --- */
-        .main-content-card {{
-            background: white;
-            border-radius: 24px;
-            padding: 2.5rem;
-            max-width: 1000px;
-            margin: 0 auto 2rem auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            position: relative;
-            z-index: 10;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 25px rgba(14, 78, 117, 0.15);
         }}
         
         /* --- TYPOGRAPHY --- */
         h1 {{
             font-family: 'Outfit', sans-serif;
-            font-weight: 800 !important;
-            font-size: 3.5rem !important;
-            margin-bottom: 0.5rem !important;
+            font-weight: 700 !important;
+            font-size: 2.2rem !important;
+            margin-bottom: 0.2rem !important;
             color: white !important;
-            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }}
         
         .subtitle {{
             font-family: 'Inter', sans-serif;
-            font-size: 1.25rem;
-            color: rgba(255,255,255,0.8);
-            font-weight: 300;
-            letter-spacing: 1px;
+            font-size: 1rem;
+            color: rgba(255,255,255,0.85);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }}
+        
+        /* --- NATIVE CONTAINER STYLING --- */
+        [data-testid="stVerticalBlockBorderWrapper"] {{
+            border-radius: 16px !important;
+            border: 1px solid #E2E8F0 !important;
+            background-color: white !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02) !important;
+            padding: 1.5rem !important;
         }}
         
         /* --- COMPONENT OVERRIDES --- */
@@ -80,16 +78,16 @@ def load_custom_css():
             width: 100%;
             background: #0E4E75 !important;
             color: white !important;
-            font-size: 1.1rem !important;
-            padding: 1rem !important;
-            border-radius: 12px !important;
+            font-size: 1rem !important;
+            padding: 0.8rem !important;
+            border-radius: 10px !important;
             border: none !important;
-            box-shadow: 0 10px 20px rgba(14, 78, 117, 0.2);
-            transition: all 0.3s ease;
+            font-weight: 600 !important;
+            transition: all 0.2s ease;
         }}
         .stButton button:hover {{
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(14, 78, 117, 0.3);
+            background: #09344f !important;
+            transform: scale(0.99);
         }}
         
         /* Hide streamlit default elements */
@@ -99,9 +97,9 @@ def load_custom_css():
         .upload-header {{
             font-family: 'Outfit', sans-serif;
             color: #0E4E75;
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0px;
         }}
         </style>
     """, unsafe_allow_html=True)
@@ -115,16 +113,16 @@ def render_hero():
         
     if os.path.exists(img_path):
         img_b64 = get_img_as_base64(img_path)
-        img_tag = f'<img src="data:image/png;base64,{img_b64}" style="width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; box-shadow: 0 8px 16px rgba(0,0,0,0.2); margin-bottom: 1.5rem;">'
+        img_tag = f'<img src="data:image/png;base64,{img_b64}" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid white; margin-bottom: 1rem;">'
     else:
-        img_tag = '<div style="font-size: 4rem;">👨‍⚕️</div>'
+        img_tag = '<div style="font-size: 3rem; margin-bottom: 0.5rem;">👨‍⚕️</div>'
 
-    # Render HTML Hero Banner
+    # Render HTML Hero Banner (Compact)
     st.markdown(f"""
         <div class="hero-cont">
             {img_tag}
             <h1>Dr. Rodrigo Gomes</h1>
-            <div class="subtitle">ANTIGRAVITY CLINICAL AI</div>
+            <div class="subtitle">Antigravity Clinical AI</div>
         </div>
     """, unsafe_allow_html=True)
 
