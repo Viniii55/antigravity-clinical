@@ -97,12 +97,27 @@ def load_custom_css():
         #MainMenu, footer, header {{visibility: hidden;}}
         
         /* Custom Upload Styling */
-        .upload-header {{
+        .upload-header {
             font-family: 'Outfit', sans-serif;
             color: #0E4E75;
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0px;
+        }
+
+        /* --- MOBILE OPTIMIZATIONS --- */
+        @media (max-width: 768px) {{
+            /* Hide Sidebar completely on mobile for focus */
+            section[data-testid="stSidebar"] {{
+                display: none !important;
+            }}
+            /* Adjust padding for mobile */
+            .hero-cont {{
+                padding: 1.5rem 1rem 2rem 1rem !important;
+            }}
+            h1 {{
+                font-size: 1.8rem !important;
+            }}
         }}
 
         /* --- RESULT STATE STYLING --- */
