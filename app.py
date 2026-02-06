@@ -56,29 +56,32 @@ with st.expander("ℹ️ Guia Rápido: Como obter o melhor resultado", expanded=
     """)
 
 # --- MAIN INPUT SECTION (2 COLUMNS) ---
-with st.container():
-    st.markdown('<div class="clinical-card">', unsafe_allow_html=True)
+st.markdown('<div class="clinical-card">', unsafe_allow_html=True)
+
+col_upload_1, col_upload_2 = st.columns(2, gap="large")
+
+with col_upload_1:
+    st.markdown("#### 📂 1. Imagens das Anotações")
+    st.caption("Fotos do caderno, prontuário ou rascunhos.")
+    uploaded_images = st.file_uploader(
+        "image_uploader_hidden_label", 
+        label_visibility="collapsed",
+        type=['png', 'jpg', 'jpeg'], 
+        accept_multiple_files=True,
+        key="img_uploader"
+    )
     
-    col_upload_1, col_upload_2 = st.columns(2, gap="large")
+with col_upload_2:
+    st.markdown("#### 🎙️ 2. Áudio do Caso")
+    st.caption("Resumo verbal ou gravação da sessão.")
+    uploaded_audio = st.file_uploader(
+        "audio_uploader_hidden_label",
+        label_visibility="collapsed", 
+        type=['mp3', 'ogg', 'wav', 'm4a'],
+        key="audio_uploader"
+    )
     
-    with col_upload_1:
-        st.markdown("### 📂 1. Imagens das Anotações")
-        uploaded_images = st.file_uploader(
-            "Carregar fotos do caderno/prontuário", 
-            type=['png', 'jpg', 'jpeg'], 
-            accept_multiple_files=True,
-            key="img_uploader"
-        )
-        
-    with col_upload_2:
-        st.markdown("### 🎙️ 2. Áudio do Caso")
-        uploaded_audio = st.file_uploader(
-            "Carregar áudio complementar (opcional)", 
-            type=['mp3', 'ogg', 'wav', 'm4a'],
-            key="audio_uploader"
-        )
-        
-    st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # --- ACTION SECTION ---
 generate_btn = st.button("GERAR LAUDO CLÍNICO", type="primary", use_container_width=True)

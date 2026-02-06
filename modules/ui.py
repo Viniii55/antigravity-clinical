@@ -71,13 +71,12 @@ def load_custom_css():
     """, unsafe_allow_html=True)
 
 def render_hero():
-    
     # Container Principal do Hero
     st.markdown("""
-    <div style="padding: 2rem 0; border-bottom: 2px solid #F0F2F6; margin-bottom: 2rem;">
+    <div style="padding: 1rem 0 2rem 0; border-bottom: 2px solid #F0F2F6; margin-bottom: 2rem;">
     """, unsafe_allow_html=True)
     
-    col1, col2 = st.columns([1, 5])
+    col1, col2 = st.columns([1.2, 5], gap="medium")
     
     with col1:
         # Profile Picture Logic
@@ -86,32 +85,35 @@ def render_hero():
             img_path = "assets/profile.jpg"
             
         if os.path.exists(img_path):
-            st.image(img_path, width=110)
+            st.image(img_path, width=150) # Aumentando para 150px
         else:
             st.markdown("""
                 <div style='
-                    width: 100px; height: 100px; 
+                    width: 150px; height: 150px; 
                     background: #0E4E75; 
-                    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-                    color: white; font-size: 2.5rem;'>
+                    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+                    color: white; font-size: 4rem;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);'>
                     👨‍⚕️
                 </div>
             """, unsafe_allow_html=True)
 
     with col2:
         st.markdown("""
-            <div style='display: flex; flex-direction: column; justify-content: center; height: 100%;'>
+            <div style='display: flex; flex-direction: column; justify-content: center; height: 100%; padding-top: 20px;'>
                 <h1 style='
                     color: #0E4E75;
                     font-size: 2.8rem; 
                     margin: 0;
-                    line-height: 1.2;
-                '>Antigravity Clinical AI <span style='font-weight: 300; opacity: 0.7;'>|</span> Dr. Rodrigo Gomes</h1>
+                    line-height: 1.1;
+                    font-family: "Helvetica Neue", sans-serif;
+                '>Antigravity Clinical AI <span style='font-weight: 300; color: #94A3B8;'>|</span> Dr. Rodrigo Gomes</h1>
                 <p style='
                     color: #64748B; 
                     font-size: 1.2rem; 
-                    margin-top: 8px;
+                    margin-top: 10px;
                     font-weight: 400;
+                    font-family: "Helvetica Neue", sans-serif;
                 '>
                     Transformando anotações brutas em laudos clínicos estruturados.
                 </p>
