@@ -147,24 +147,24 @@ def render_hero():
             <div style='display: flex; flex-direction: column; justify-content: center; height: 100%; padding-left: 10px;'>
                 <h1 style='
                     font-family: "Outfit", sans-serif;
-                    font-size: 3.5rem; 
+                    font-size: 4.2rem; 
                     font-weight: 800;
                     margin: 0;
-                    background: -webkit-linear-gradient(0deg, #ffffff 10%, #818cf8 90%);
+                    background: -webkit-linear-gradient(0deg, #ffffff 10%, #a5b4fc 90%);
                     -webkit-background-clip: text;
                     -webkit-text-fill-color: transparent;
-                    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+                    text-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
                 '>Dr. Rodrigo Gomes</h1>
                 <p style='
-                    color: #94a3b8; 
-                    font-size: 1.1rem; 
-                    font-weight: 500; 
-                    letter-spacing: 3px; 
+                    color: #cbd5e1; 
+                    font-size: 1.3rem; 
+                    font-weight: 600; 
+                    letter-spacing: 2px; 
                     text-transform: uppercase;
-                    margin-top: -10px;
-                    display: flex; align-items: center; gap: 10px;
+                    margin-top: -5px;
+                    display: flex; align-items: center; gap: 12px;
                 '>
-                    <span style='color: #6366f1;'>●</span> Neuropsicologia Clínica <span style='color: #6366f1;'>●</span> CRM: 05/59056
+                    <span style='color: #818cf8; font-size: 1.5rem;'>•</span> Neuropsicologia Clínica <span style='color: #818cf8; font-size: 1.5rem;'>•</span> CRM: 05/59056
                 </p>
                 <div style='margin-top: 15px; display: inline-block;'>
                     <span style='
