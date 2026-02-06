@@ -3,9 +3,12 @@ import base64
 import os
 
 def get_img_as_base64(file_path):
-    with open(file_path, "rb") as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
+    try:
+        with open(file_path, "rb") as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+    except:
+        return ""
 
 def load_custom_css():
     # Carregar imagem de fundo para o Banner
@@ -94,33 +97,33 @@ def load_custom_css():
         #MainMenu, footer, header {{visibility: hidden;}}
         
         /* Custom Upload Styling */
-        .upload-header {
+        .upload-header {{
             font-family: 'Outfit', sans-serif;
             color: #0E4E75;
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 0px;
-        }
+        }}
 
         /* --- RESULT STATE STYLING --- */
         
         /* 1. Download Button (Green Success) */
-        [data-testid="stDownloadButton"] button {
+        [data-testid="stDownloadButton"] button {{
             background-color: #2E7D32 !important;
             border: none !important;
             color: white !important;
             font-weight: 700 !important;
             padding: 0.8rem 1.5rem !important;
             box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3) !important;
-        }
-        [data-testid="stDownloadButton"] button:hover {
+        }}
+        [data-testid="stDownloadButton"] button:hover {{
             background-color: #1B5E20 !important;
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(46, 125, 50, 0.4) !important;
-        }
+        }}
         
         /* 2. Report Paper Look (Text Area) */
-        .stTextArea textarea {
+        .stTextArea textarea {{
             background-color: #ffffff !important;
             border: 1px solid #e0e0e0 !important;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05) !important; /* Elegant Shadow */
@@ -129,17 +132,17 @@ def load_custom_css():
             font-family: 'Helvetica Neue', Arial, sans-serif !important;
             line-height: 1.6 !important;
             color: #334155 !important;
-        }
+        }}
         
         /* 3. Spinner/Loading Text */
-        .stSpinner > div > div {
+        .stSpinner > div > div {{
             border-top-color: #0E4E75 !important;
-        }
-        .stSpinner p {
+        }}
+        .stSpinner p {{
             color: #0E4E75 !important;
             font-weight: 700 !important;
             font-size: 1.1rem !important;
-        }
+        }}
         </style>
     """, unsafe_allow_html=True)
 
